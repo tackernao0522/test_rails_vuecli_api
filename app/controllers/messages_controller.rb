@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: ["index"]
 
   def index
     messages = Message.includes(:user, [likes: :user])
@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
         content: message.content,
         email: message.user.email,
         created_at: message.created_at,
-        likes: message.likes.map { |like| { id: like.id, email: like.user.email }  }
+        likes: message.likes.map { |like| { id: like.id, email: like.user.email } }
       }
     end
 
